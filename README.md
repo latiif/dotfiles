@@ -82,6 +82,8 @@ system:
        brew install vim
        ```
 
+7. **FiraMono Nerd Font**: Make sure [FiraMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip) is installed on your system.
+
 Ensure all the above dependencies are installed before proceeding with setting
 up the dotfiles. These tools are essential for a seamless experience with the
 provided configurations.
