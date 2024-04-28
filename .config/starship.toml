@@ -1,0 +1,10 @@
+add_newline = false
+command_timeout = 1000
+
+[status]
+style = 'bg:light'
+symbol = '🔴'
+success_symbol = '🟢'
+format = '\[$symbol$maybe_int\]($style) '
+map_symbol = true
+disabled = false
