@@ -54,6 +54,8 @@ Plug 'godlygeek/tabular'
 Plug 'cespare/vim-toml'
 Plug 'catppuccin/vim', { 'as': 'catppuccin'  }
 Plug 'ryanoasis/vim-devicons'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
