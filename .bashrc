@@ -141,3 +141,5 @@ alias python=python3
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:/home/latiif/Programs/Telegram
 eval "$(starship init bash)"
+eval "$(zoxide init bash)"
+alias cd=z
