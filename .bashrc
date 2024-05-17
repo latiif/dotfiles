@@ -137,6 +137,7 @@ fi
 alias cat=bat
 alias groot='cd "$(git rev-parse --show-cdup)"'
 alias sudo=doas
+alias vim=nvim
 alias python=python3
 
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
