@@ -18,6 +18,8 @@ set tabstop=4
 set shiftwidth=4    " Indents will have a width of 4
 set softtabstop=4   " Sets the number of columns for a TAB
 set nopaste "Make it easier to paste into vim
+set clipboard=unnamedplus
+
 
 set expandtab       " Expand TABs to spaces
 if has("persistent_undo")
