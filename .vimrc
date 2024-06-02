@@ -70,7 +70,7 @@ let g:go_fmt_command="goimports"
 let g:go_auto_type_info = 1
 let g:go_auto_same_ids = 1
 
-let g:airline_theme = 'catppuccin_mocha'
+let g:airline_theme = 'catppuccin_frappe'
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
 set nolist
