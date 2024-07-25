@@ -6,7 +6,7 @@ set splitright
 set hlsearch
 syntax enable
 syntax spell toplevel
-set background=dark
+set background=light
 set showmatch
 set sidescroll=1
 set sidescrolloff=0
@@ -59,6 +59,7 @@ Plug 'catppuccin/vim', { 'as': 'catppuccin'  }
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
 Plug 'junegunn/fzf.vim'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -73,9 +74,9 @@ let g:go_auto_same_ids = 1
 let g:airline_theme = 'catppuccin_frappe'
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
-set nolist
 
-:set colorcolumn=80
+set colorcolumn=80
+set list
 
 let g:ale_linters = {'go': ['gometalinter','gofmt']}
 
