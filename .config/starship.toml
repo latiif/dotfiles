@@ -1,10 +1,59 @@
 add_newline = false
-command_timeout = 1000
+# ~/.config/starship.toml
 
-[status]
-style = 'bg:light'
-symbol = '🔴'
-success_symbol = '🟢'
-format = '\[$symbol$maybe_int\]($style) '
-map_symbol = true
+format = """
+$username$hostname$directory$git_branch$git_status$nodejs$rust$python
+ """
+
+# MODULES
+
+[username]
+show_always = true
+format = "[$user ]($style)"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname ]()"
+
+[directory]
+format = "[ $path ]()"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#45475a fg:#f9e2af"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bg:#45475a fg:#f38ba8"
+format = "[($all_status$ahead_behind )]($style)"
+
+[nodejs]
+symbol = ""
+style = "bg:#585b70 fg:#a6e3a1"
+format = "[ $symbol ($version) ]($style)"
+detect_extensions = ["js", "ts", "jsx", "tsx"]
+
+[rust]
+symbol = ""
+style = "bg:#585b70 fg:#fab387"
+format = "[ $symbol ($version) ]($style)"
+
+[python]
+symbol = ""
+style = "bg:#585b70 fg:#89b4fa"
+format = "[ $symbol ($version) ]($style)"
+python_binary = "python3"
+
+[time]
 disabled = false
+style = "bg:#1e1e2e fg:#a6e3a1"
+format = "[  $time ]($style)"
+time_format = "%R"  # 24h format
+
+[character]
+success_symbol = "[❯](bold #89b4fa)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[❮](bold green)"
+

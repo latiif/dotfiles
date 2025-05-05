@@ -1,88 +1,101 @@
-set ignorecase
-set smartcase
-set number
-set splitbelow
-set splitright
-set hlsearch
-syntax enable
-syntax spell toplevel
-set background=light
-set showmatch
+" ================== General Settings ==================
+set nocompatible            " Use Vim defaults (required for plugins)
+set encoding=utf-8          " Set encoding to UTF-8
+
+set ignorecase              " Case-insensitive searching...
+set smartcase               " ...unless capital letters are used
+set number                  " Show line numbers
+set splitbelow              " Horizontal splits below current window
+set splitright              " Vertical splits to the right
+set hlsearch                " Highlight search results
+set background=dark         " Set background for colorschemes
+set showmatch               " Highlight matching parentheses
 set sidescroll=1
 set sidescrolloff=0
-set autowrite
-set cursorline
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-set cursorcolumn
-set tabstop=4
-set shiftwidth=4    " Indents will have a width of 4
-set softtabstop=4   " Sets the number of columns for a TAB
-set nopaste "Make it easier to paste into vim
-set clipboard=unnamedplus
+set autowrite               " Auto-save before commands like :next and :make
+set cursorline              " Highlight current line
+set cursorcolumn            " Highlight current column
+set tabstop=4               " Number of spaces a <Tab> counts for
+set shiftwidth=4            " Number of spaces to use for each step of (auto)indent
+set softtabstop=4           " Insert 4 spaces when <Tab> is pressed
+set expandtab               " Convert tabs to spaces
+set clipboard=unnamedplus   " Use system clipboard
+set paste                   " Disable auto-indent when pasting (toggle manually if needed)
+set laststatus=2            " Always display the status line
+set colorcolumn=80          " Highlight column 80
+set list                    " Show hidden characters (like tabs, EOLs)
 
-
-set expandtab       " Expand TABs to spaces
-if has("persistent_undo")
+" Persistent undo
+if has('persistent_undo')
     set undodir=~/.undodir/
     set undofile
 endif
 
-set laststatus=2
+" Enable syntax highlighting and spell checking
+syntax enable
+syntax spell toplevel
 
-
-""""""""""""""""""""""""""""""""     vimrc     """"""""""""""""""""""""""""""{{{
-set nocompatible              " be iMproved, required
-set encoding=utf-8
-"}}}
-
-"""""""""""""""""""""""""""""""     vim-plug """"""""""""""""""""""""""""""{{{
+" ================== Plugin Manager (vim-plug) ==================
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-"}}}
 
-"""""""""""""""""""""""""""""""     Plugins     """""""""""""""""""""""""""""{{{
+" ================== Plugins ==================
 call plug#begin('~/.vim/plugged')
+
+" Essential Plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'tpope/vim-surround'
 Plug 'ycm-core/youcompleteme'
 Plug 'chun-yang/auto-pairs'
 Plug 'vim-airline/vim-airline'
-Plug 'dense-analysis/ale'
-Plug 'tpope/vim-fugitive'
-Plug 'preservim/tagbar'
-Plug 'godlygeek/tabular'
-Plug 'cespare/vim-toml'
-Plug 'catppuccin/vim', { 'as': 'catppuccin'  }
+
+" UI Enhancements
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'ryanoasis/vim-devicons'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'NLKNguyen/papercolor-theme'
+
+" FZF Integration
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" Terminal and Tmux Integration
 Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
-nmap <F2> :TagbarToggle<CR>
-
-
-let g:ymc_autoclose_preview_window_after_insertion = 1
-let g:go_fmt_command="goimports"
-let g:go_auto_type_info = 1
-let g:go_auto_same_ids = 1
-
+" ================== Plugin Configurations ==================
+" vim-airline
 let g:airline_theme = 'catppuccin_frappe'
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
 
-set colorcolumn=80
-set list
+" vim-go
+let g:go_fmt_command = 'goimports'
+let g:go_auto_type_info = 1
+let g:go_auto_same_ids = 1
 
-let g:ale_linters = {'go': ['gometalinter','gofmt']}
+" youcompleteme
+let g:ymc_autoclose_preview_window_after_insertion = 1
 
+" ale
+let g:ale_linters = {'go': ['gometalinter', 'gofmt']}
 
+" ================== Keymaps ==================
+nnoremap <F2> :TagbarToggle<CR>
 
-"" Autocmd for filetypes
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+" ================== Autocommands ==================
+" Colorscheme
+colorscheme catppuccin_mocha
+
+" YAML specific settings
+autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+" Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
+
+" Alias :Files to F
+command! F :Files
 

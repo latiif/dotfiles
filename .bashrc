@@ -122,6 +122,8 @@ export JAVA_HOME=/usr/lib/jvm/default-java
 export PATH=$PATH:/home/latiif/github/delay
 export PATH=$PATH:/home/latiif/github/sunwait
 export PATH=$PATH:/home/latiif
+export PATH=$PATH:/home/latiif/Programs/Telegram
+export VIM_BACKGROUND=$(sunwait poll exit  57.7089N 1.9746E)
 
 alias gst='git status'
 
@@ -140,8 +142,18 @@ alias sudo=doas
 alias python=python3
 
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-export PATH=$PATH:/home/latiif/Programs/Telegram
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 eval "$(fzf --bash)"
 alias cd=z
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# For GTK-based applications:
+export GTK_THEME=Adwaita
+# For icons:
+export XDG_ICON_THEME=Papirus
+
