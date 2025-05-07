@@ -1,0 +1,20 @@
+#i3blocks config - minimal and simplistic
+[tv]
+command=~/.config/i3blocks/check_episodes.sh
+interval=3600
+
+[cpu_mem]
+command=~/.config/i3blocks/cpu_mem.sh
+markup=pango
+interval=5
+
+[ip]
+command=~/.config/i3blocks/ip.sh
+interval=30
+
+[time]
+color=#ffcc00
+command=date '+%H:%M'
+interval=60
+
+
