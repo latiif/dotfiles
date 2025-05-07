@@ -137,6 +137,7 @@ alias cat=bat
 alias groot='cd "$(git rev-parse --show-cdup)"'
 alias sudo=doas
 alias python=python3
+alias y='xclip -selection clipboard <' # yank file to clipboard
 
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 eval "$(starship init bash)"
