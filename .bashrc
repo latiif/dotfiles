@@ -119,11 +119,8 @@ fi
 
 export PATH=$PATH:/home/latiif/go/bin
 export JAVA_HOME=/usr/lib/jvm/default-java
-export PATH=$PATH:/home/latiif/github/delay
-export PATH=$PATH:/home/latiif/github/sunwait
 export PATH=$PATH:/home/latiif
 export PATH=$PATH:/home/latiif/Programs/Telegram
-export VIM_BACKGROUND=$(sunwait poll exit  57.7089N 1.9746E)
 
 alias gst='git status'
 
