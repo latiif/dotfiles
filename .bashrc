@@ -117,7 +117,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=$PATH:/home/latiif/go/bin
 export JAVA_HOME=/usr/lib/jvm/default-java
 export PATH=$PATH:/home/latiif
 export PATH=$PATH:/home/latiif/Programs/Telegram
@@ -127,11 +126,10 @@ alias gst='git status'
 export BAT_THEME="ansi"
 EDITOR="vim"
 
-
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux attach -t default || tmux new -s default
+# Start tmux if not inside tmux or VS Code terminal
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    tmux attach-session -t default || tmux new-session -s default
 fi
-
 
 alias cat=bat
 alias groot='cd "$(git rev-parse --show-cdup)"'
@@ -154,4 +152,3 @@ export NVM_DIR="$HOME/.nvm"
 export GTK_THEME=Adwaita
 # For icons:
 export XDG_ICON_THEME=Papirus
-

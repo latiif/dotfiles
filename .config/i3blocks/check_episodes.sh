@@ -35,8 +35,8 @@ done < "$SERIES_LIST"
 # Output for i3blocks
 if [[ "$BLOCK_BUTTON" == "1" ]]; then
     # Left click: show notification
-    notify-send "📺 TV Updates" "${details:-No new episodes found.}"
+    notify-send "📺 TV Updates" "${details:-No new episodes found.}" -t 0
 else
-    echo "📺 $new_count show(s)"
+    echo "󰑈 $new_count"
 fi
 

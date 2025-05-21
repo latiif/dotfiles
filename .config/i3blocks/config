@@ -12,6 +12,11 @@ interval=5
 command=~/.config/i3blocks/ip.sh
 interval=30
 
+[volume]
+command=~/.config/i3blocks/volume.sh
+interval=1
+signal=10
+
 [time]
 color=#ffcc00
 command=date '+%H:%M'

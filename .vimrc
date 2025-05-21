@@ -48,14 +48,15 @@ call plug#begin('~/.vim/plugged')
 " Essential Plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'tpope/vim-surround'
-Plug 'ycm-core/youcompleteme'
 Plug 'chun-yang/auto-pairs'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+
+Plug 'preservim/nerdtree'
 
 " UI Enhancements
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'ryanoasis/vim-devicons'
-Plug 'NLKNguyen/papercolor-theme'
 
 " FZF Integration
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -68,7 +69,6 @@ call plug#end()
 
 " ================== Plugin Configurations ==================
 " vim-airline
-let g:airline_theme = 'catppuccin_frappe'
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
 
@@ -88,14 +88,19 @@ nnoremap <F2> :TagbarToggle<CR>
 
 " ================== Autocommands ==================
 " Colorscheme
-colorscheme catppuccin_mocha
+colorscheme desert
 
 " YAML specific settings
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 " Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
+let g:airline_theme='desertink'
 
 " Alias :Files to F
 command! F :Files
+
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+let g:NERDTreeFileLines = 1
 

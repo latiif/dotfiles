@@ -23,8 +23,8 @@ colorize() {
   fi
 }
 
-cpu_text=$(colorize "$cpu_usage" "🧠")
-mem_text=$(colorize "$mem_usage" "💾")
+cpu_text=$(colorize "$cpu_usage" "")
+mem_text=$(colorize "$mem_usage" "")
 
 echo -e "<b>$cpu_text $mem_text</b>"
 
