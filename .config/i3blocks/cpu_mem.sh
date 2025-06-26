@@ -15,11 +15,11 @@ colorize() {
   usage=$1
   emoji=$2
   if [ "$usage" -lt 50 ]; then
-    echo "<span foreground='green'>${emoji}$usage%</span>"
+    echo "<span foreground='light green'>${emoji}$usage%</span>"
   elif [ "$usage" -lt 80 ]; then
-    echo "<span foreground='orange'>${emoji}$usage%</span>"
+    echo "<span foreground='light orange'>${emoji}$usage%</span>"
   else
-    echo "<span foreground='red'>${emoji}$usage%</span>"
+    echo "<span foreground='light red'>${emoji}$usage%</span>"
   fi
 }
 

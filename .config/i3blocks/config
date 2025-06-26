@@ -18,8 +18,8 @@ interval=1
 signal=10
 
 [time]
-color=#ffcc00
 command=date '+%H:%M'
+signal=1
+markup=pango
+color=#ffcc00
 interval=60
-
-

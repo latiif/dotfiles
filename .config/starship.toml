@@ -2,7 +2,7 @@ add_newline = false
 # ~/.config/starship.toml
 
 format = """
-$username$hostname$directory$git_branch$git_status$nodejs$rust$python
+$username$directory$git_branch$git_status$nodejs$rust$python
  """
 
 # MODULES

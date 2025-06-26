@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = true
 config.window_decorations = "RESIZE"
-config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = 'Tango (terminal.sexy)'
 
 -- Font settings
 config.font = wezterm.font_with_fallback({
@@ -13,18 +13,18 @@ config.font = wezterm.font_with_fallback({
   'JetBrains Mono',        -- Fallback
   'Noto Color Emoji',      -- Emoji support
 })
-config.font_size = 10
+config.font_size = 14
 config.font_shaper = 'Harfbuzz'
 
 -- Window aesthetics
 config.window_padding = {
-  left = 8,
-  right = 8,
-  top = 6,
-  bottom = 6,
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
 }
 
-config.window_background_opacity = 0.99
+config.window_background_opacity = 1
 config.macos_window_background_blur = 20 -- Only on macOS
 
 -- Cursor appearance
@@ -54,5 +54,8 @@ config.keys = {
     action = wezterm.action.ShowDebugOverlay,
   },
 }
+
+config.adjust_window_size_when_changing_font_size = false
+config.freetype_load_target = "Light"
 
 return config
