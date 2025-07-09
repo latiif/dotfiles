@@ -147,6 +147,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Customize fzf behavior
+export FZF_CTRL_T_OPTS="
+  --height=80%
+  --layout=reverse
+  --border
+  --preview 'bat --style=numbers --color=always {} || head -100 {}'
+  --preview-window=right:60%
+"
+
 
 # For GTK-based applications:
 export GTK_THEME=Adwaita

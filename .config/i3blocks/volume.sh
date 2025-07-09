@@ -17,7 +17,7 @@ else
 fi
 
 # Output volume info with icon
-echo "$ICON $VOLUME"
+echo "$ICON  $VOLUME"
 
 # Handle click events
 case "$BLOCK_BUTTON" in

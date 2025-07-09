@@ -1,13 +1,15 @@
 set $mod Mod4
 
-font pango:RobotoMono Nerd Font Mono 10
+font pango:itf Qomra Arabic 10
 
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -e --nofork\
+-i /home/latiif/Pictures/syria/1.jpg
+
 exec --no-startup-id nm-applet
 
-exec_always --no-startup-id feh --bg-fill /home/latiif/Pictures/MKBSD/345.jpg
-exec_always --no-startup-id setxkbmap -layout us,sy -variant altgr-intl, -option grp:alt_shift_toggle
+exec_always --no-startup-id feh --bg-fill /home/latiif/Pictures/emblem.svg
+exec --no-startup-id setxkbmap -layout "us,sy" -variant "altgr-intl," -option "grp:alt_shift_toggle"
 
 # Use pactl to adjust volume in PulseAudio.  set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -17,16 +19,16 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 
 # Background & Foreground
-set $base       #2e3436
-set $text       #eeeeec
+set $base       #002623
+set $text       #edebe0
 set $subtle     #d3d7cf
 
 # Accent Colors
-set $red        #cc0000
+set $red        #DC143C
 set $orange     #f57900
 set $yellow     #edd400
 set $green      #73d216
-set $blue       #3465a4
+set $blue       #428177
 set $purple     #75507b
 set $cyan       #06989a
 set $white      #ffffff
@@ -41,7 +43,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec wezterm
+bindsym $mod+Return exec st
 
 # kill focused window
 bindsym Control+q kill
@@ -57,6 +59,7 @@ bindsym $mod+s exec --no-startup-id /home/latiif/Programs/flameshot gui
 assign [class="Firefox"] $ws1
 assign [class="Brave"] $ws1
 assign [class="org.wezfurlong.wezterm"] $ws2
+assign [class="st"] $ws2
 assign [class="Code"] $ws3
 assign [class="thunderbird-esr"] $ws9
 assign [class="transmission-gtk"] $ws10
@@ -110,11 +113,11 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1 "
-set $ws2 "2 "
-set $ws3 "3 "
-set $ws9 "9 "
-set $ws4 "4 󰭹"
+set $ws1 "1  "
+set $ws2 "2   "
+set $ws3 "3  "
+set $ws9 "9   "
+set $ws4 "4  󰭹"
 set $ws10 "10"
 set $ws5 "5"
 set $ws6 "6"
@@ -179,12 +182,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bindsym $mod+shift+x exec i3lock -c 000000
+bindsym $mod+shift+x exec i3lock -c 002623 -e \
+-i /home/latiif/Pictures/syria/3.png
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-				font pango:RobotoMono Nerd Font Mono 10
+				font pango:itf Qomra Arabic 10
 				position top
         status_command i3blocks
     		separator_symbol "·"

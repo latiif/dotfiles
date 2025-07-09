@@ -37,6 +37,6 @@ if [[ "$BLOCK_BUTTON" == "1" ]]; then
     # Left click: show notification
     notify-send "📺 TV Updates" "${details:-No new episodes found.}" -t 0
 else
-    echo "󰑈 $new_count"
+    echo "󰑈  $new_count"
 fi
 

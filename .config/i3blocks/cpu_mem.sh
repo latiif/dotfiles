@@ -24,7 +24,7 @@ colorize() {
 }
 
 cpu_text=$(colorize "$cpu_usage" "")
-mem_text=$(colorize "$mem_usage" "")
+mem_text=$(units -t "$mem_used megabytes" gigabytes | LC_NUMERIC=C xargs printf "%.2f\n" )
 
-echo -e "<b>$cpu_text $mem_text</b>"
+echo -e "<b>$cpu_text  $mem_text</b>"
 

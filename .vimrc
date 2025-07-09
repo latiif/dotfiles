@@ -124,7 +124,7 @@ command! F :Files
 
 " ================== Autocommands ==================
 " Theme
-colorscheme desert
+colorscheme syria_forest
 
 " YAML Indentation
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -132,6 +132,7 @@ autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
+set termguicolors
 " ================== Performance ==================
 set lazyredraw
 set ttyfast
