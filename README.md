@@ -1,111 +1,49 @@
-# Dotfiles Repository
+# Dotfiles
 
-This repository contains my personal dotfiles managed with GNU Stow.
+![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
+![Zsh](https://img.shields.io/badge/Zsh-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Vim](https://img.shields.io/badge/Vim-019733?style=for-the-badge&logo=vim&logoColor=white)
+![Starship](https://img.shields.io/badge/Starship-DD0B78?style=for-the-badge&logo=starship&logoColor=white)
 
-## About Dotfiles
+Personal macOS dotfiles managed with GNU Stow.
 
-Dotfiles are configuration files (often starting with a dot, hence the name)
-used to personalize applications and settings on Unix-like systems. This
-repository houses various configuration files for tools and applications I use
-regularly.
+## Install
 
-### Prerequisites
+```bash
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-Before using these dotfiles, ensure the following software is installed on your
-system:
+# Install tools
+brew install git stow vim bat eza zoxide fzf starship fd ripgrep
+brew install zsh-syntax-highlighting zsh-autosuggestions
+brew install --cask iterm2 zed
 
-1. **Git**: Version control system used for cloning and managing this
-   repository.
-   - Install Git:
-     - Debian/Ubuntu:
-       ```bash
-       sudo apt-get install git
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install git
-       ```
+# Clone and deploy
+git clone https://github.com/latiif/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+stow .
 
-2. **GNU Stow**: Software used to manage symbolic links for dotfiles.
-   - Install GNU Stow:
-     - Debian/Ubuntu:
-       ```bash
-       sudo apt-get install stow
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install stow
-       ```
+# Reload shell
+source ~/.zshrc
 
-3. **Bat**: A cat clone with syntax highlighting and Git integration.
-   - Install Bat:
-     - Debian/Ubuntu:
-       ```bash
-       sudo apt-get install bat
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install bat
-       ```
+# Install vim plugins
+vim +PlugInstall +qall
+```
 
-4. **Starship**: Minimal, fast, and customizable prompt for any shell.
-   - Install Starship:
-     - Debian/Ubuntu:
-       ```bash
-       curl -fsSL https://starship.rs/install.sh | bash
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install starship
-       ```
+## iTerm2 Setup
 
-5. **Tmux**: Terminal multiplexer that enables multiple terminals in a single
-   window.
-   - Install Tmux:
-     - Debian/Ubuntu:
-       ```bash
-       sudo apt-get install tmux
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install tmux
-       ```
+```bash
+mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
+ln -sf ~/.config/iterm2/DynamicProfiles/profiles.json \
+       ~/Library/Application\ Support/iTerm2/DynamicProfiles/
+```
 
-6. **Vim**: Highly configurable text editor often used in terminal environments.
-   - Install Vim:
-     - Debian/Ubuntu:
-       ```bash
-       sudo apt-get install vim
-       ```
-     - macOS (via Homebrew):
-       ```bash
-       brew install vim
-       ```
+Then restart iTerm2.
 
-7. **FiraMono Nerd Font**: Make sure [FiraMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip) is installed on your system.
+## Files
 
-8. **Other**: Install these commands:
-   ```bash
-    sudo apt-get install exa zoxide
-   ```
-
-Ensure all the above dependencies are installed before proceeding with setting
-up the dotfiles. These tools are essential for a seamless experience with the
-provided configurations.
-
-### Setup
-
-1. **Clone the Repository**:
-
-   ```bash
-   git clone https://github.com/latiif/dotfiles.git ~/.dotfiles
-   ```
-
-1. **Navigate to the Repository**:
-   ```bash
-   cd ~/.dotfiles
-   ```
-1. **Deploy Dotfiles**:
-   ```bash
-   stow .
-   ```
+- `.zshrc` - Shell configuration
+- `.vimrc` - Vim configuration
+- `.config/starship.toml` - Prompt
+- `.config/zed/settings.json` - Zed editor
+- `.config/iterm2/` - iTerm2 profiles
