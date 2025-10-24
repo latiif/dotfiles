@@ -1,22 +1,21 @@
-# ~/.bashrc: macOS configuration
+# ~/.zshrc: macOS configuration
 
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+# ================== ZSH Options ==================
+setopt HIST_IGNORE_ALL_DUPS  # Don't save duplicate commands
+setopt HIST_FIND_NO_DUPS     # Don't show duplicates in search
+setopt HIST_SAVE_NO_DUPS     # Don't save duplicates
+setopt SHARE_HISTORY         # Share history between sessions
+setopt APPEND_HISTORY        # Append to history file
+setopt INC_APPEND_HISTORY    # Add commands immediately
+setopt AUTO_CD               # cd by just typing directory name
+setopt AUTO_PUSHD            # Make cd push old dir onto stack
+setopt PUSHD_IGNORE_DUPS     # Don't push duplicates
+setopt GLOB_COMPLETE         # Show completions for glob patterns
 
 # History configuration
-HISTCONTROL=ignoreboth
-shopt -s histappend
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
-HISTFILESIZE=20000
-
-# Check window size after each command
-shopt -s checkwinsize
-
-# Enable globstar for recursive globbing
-shopt -s globstar
+SAVEHIST=20000
 
 # ================== Environment Variables ==================
 export EDITOR="vim"
@@ -64,7 +63,7 @@ alias python='python3'
 alias pip='pip3'
 alias h='history'
 alias c='clear'
-alias reload='source ~/.bashrc'
+alias reload='source ~/.zshrc'
 
 # macOS specific
 alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
@@ -76,31 +75,40 @@ alias pbcopy='pbcopy'
 alias pbpaste='pbpaste'
 alias y='pbcopy <'  # yank file to clipboard
 
-# ================== Bash Completion ==================
-# Homebrew bash completion
-if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-    . "$(brew --prefix)/etc/bash_completion"
-fi
+# ================== Completions ==================
+# Load completions
+autoload -Uz compinit
+compinit
 
-# Git completion
-if [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
-    . "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Menu-style completion
+zstyle ':completion:*' menu select
+
+# Color completion
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Homebrew completions
+if type brew &>/dev/null; then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
 # ================== Starship Prompt ==================
 if command -v starship &> /dev/null; then
-    eval "$(starship init bash)"
+    eval "$(starship init zsh)"
 fi
 
 # ================== Zoxide (smart cd) ==================
 if command -v zoxide &> /dev/null; then
-    eval "$(zoxide init bash)"
+    eval "$(zoxide init zsh)"
     alias cd='z'
 fi
 
 # ================== FZF Configuration ==================
 if command -v fzf &> /dev/null; then
-    eval "$(fzf --bash)"
+    # Set up fzf key bindings and fuzzy completion
+    source <(fzf --zsh)
 
     # FZF customization
     export FZF_DEFAULT_OPTS="
@@ -119,6 +127,13 @@ if command -v fzf &> /dev/null; then
     "
 
     export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+    # Use fd for fzf if available (faster)
+    if command -v fd &> /dev/null; then
+        export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    fi
 fi
 
 # ================== NVM (Node Version Manager) ==================
@@ -132,13 +147,25 @@ if command -v go &> /dev/null; then
     export PATH="$PATH:$GOPATH/bin"
 fi
 
-# ================== Source local configuration ==================
-# Load local bashrc if it exists (for machine-specific config)
-if [ -f ~/.bashrc.local ]; then
-    . ~/.bashrc.local
+# ================== Syntax Highlighting (if installed) ==================
+# Install with: brew install zsh-syntax-highlighting
+if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
-# Load bash aliases if they exist
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+# ================== Auto-suggestions (if installed) ==================
+# Install with: brew install zsh-autosuggestions
+if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+# ================== Source local configuration ==================
+# Load local zshrc if it exists (for machine-specific config)
+if [ -f ~/.zshrc.local ]; then
+    source ~/.zshrc.local
+fi
+
+# Load zsh aliases if they exist
+if [ -f ~/.zsh_aliases ]; then
+    source ~/.zsh_aliases
 fi

@@ -4,7 +4,7 @@ Personal dotfiles for macOS, managed with GNU Stow.
 
 ## Features
 
-- **Bash**: Enhanced shell configuration with modern CLI tools
+- **Zsh**: Enhanced shell configuration with modern CLI tools (macOS default)
 - **Vim**: Comprehensive vim configuration with plugins
 - **Starship**: Beautiful, minimal prompt
 - **Zed**: Modern code editor configuration
@@ -35,6 +35,9 @@ brew install vim
 # Optional but recommended
 brew install ripgrep fd tree
 brew install node  # Includes npm
+
+# Zsh enhancements (optional)
+brew install zsh-syntax-highlighting zsh-autosuggestions
 ```
 
 ### Fonts
@@ -62,7 +65,7 @@ Configure your terminal (iTerm2) to use one of these fonts.
 
    ```bash
    # Backup your current configs
-   mv ~/.bashrc ~/.bashrc.backup 2>/dev/null
+   mv ~/.zshrc ~/.zshrc.backup 2>/dev/null
    mv ~/.vimrc ~/.vimrc.backup 2>/dev/null
    mv ~/.config/starship.toml ~/.config/starship.toml.backup 2>/dev/null
    ```
@@ -75,10 +78,10 @@ Configure your terminal (iTerm2) to use one of these fonts.
 
    This will create symlinks from your home directory to the dotfiles repository.
 
-4. **Source the new bashrc**:
+4. **Source the new zshrc**:
 
    ```bash
-   source ~/.bashrc
+   source ~/.zshrc
    ```
 
 5. **Install Vim plugins**:
@@ -89,15 +92,17 @@ Configure your terminal (iTerm2) to use one of these fonts.
 
 ## Configuration Files
 
-### Bash (.bashrc)
+### Zsh (.zshrc)
 
 - Modern CLI tool integration (eza, bat, zoxide, fzf)
 - Starship prompt
-- Sensible aliases and environment variables
-- macOS-specific utilities
+- Sensible ZSH options (auto-cd, history management)
+- Completion system with case-insensitive matching
+- macOS-specific utilities and aliases
 - Git aliases
 - NVM integration
 - Go path configuration
+- Syntax highlighting and auto-suggestions (optional)
 
 ### Vim (.vimrc)
 
@@ -152,10 +157,10 @@ To use the iTerm2 configuration:
 
 ### Local Configuration
 
-Create a `~/.bashrc.local` file for machine-specific settings that shouldn't be in version control:
+Create a `~/.zshrc.local` file for machine-specific settings that shouldn't be in version control:
 
-```bash
-# Example ~/.bashrc.local
+```zsh
+# Example ~/.zshrc.local
 export CUSTOM_VAR="value"
 alias custom-alias='some-command'
 ```
@@ -204,23 +209,24 @@ stow -D .
 
 | Tool         | Purpose         | Config File                       |
 | ------------ | --------------- | --------------------------------- |
-| **bash**     | Shell           | `.bashrc`                         |
+| **zsh**      | Shell           | `.zshrc`                          |
 | **vim**      | Text editor     | `.vimrc`                          |
 | **starship** | Shell prompt    | `.config/starship.toml`           |
 | **zed**      | Code editor     | `.config/zed/settings.json`       |
 | **iTerm2**   | Terminal        | `.config/iterm2/DynamicProfiles/` |
 | **bat**      | cat replacement | Uses `$BAT_THEME`                 |
-| **eza**      | ls replacement  | Aliased in bashrc                 |
-| **zoxide**   | Smart cd        | Init in bashrc                    |
-| **fzf**      | Fuzzy finder    | Custom opts in bashrc             |
+| **eza**      | ls replacement  | Aliased in zshrc                  |
+| **zoxide**   | Smart cd        | Init in zshrc                     |
+| **fzf**      | Fuzzy finder    | Custom opts in zshrc              |
 
 ## Key Bindings
 
-### Bash
+### Zsh
 
 - `Ctrl-R`: Search history with fzf
 - `Ctrl-T`: Fuzzy file search
-- `Alt-C`: Fuzzy directory search (cd)
+- `Opt-C`: Fuzzy directory search (cd)
+- `→`: Accept auto-suggestion (if zsh-autosuggestions installed)
 
 ### Vim
 
