@@ -1,6 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# ~/.bashrc: macOS configuration
 
 # If not running interactively, don't do anything
 case $- in
@@ -8,156 +6,139 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+# History configuration
 HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
 shopt -s histappend
+HISTSIZE=10000
+HISTFILESIZE=20000
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Check window size after each command
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+# Enable globstar for recursive globbing
+shopt -s globstar
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# ================== Environment Variables ==================
+export EDITOR="vim"
+export VISUAL="vim"
+export BAT_THEME="ansi"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+# Homebrew
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+# Add user bin if it exists
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# ================== Aliases ==================
+# Modern CLI replacements
+if command -v eza &> /dev/null; then
+    alias ls='eza --icons -1 -F --color=always --group-directories-first --long --no-permissions'
+    alias ll='eza -la --icons --group-directories-first'
+    alias la='eza -a --icons'
+    alias lt='eza --tree --level=2 --icons'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    alias ls='ls -GF'
+    alias ll='ls -lGFh'
+    alias la='ls -aGF'
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+if command -v bat &> /dev/null; then
+    alias cat='bat'
+fi
 
-# some more ls aliases
-alias ls='exa --icons -1 -F --color=always --group-directories-first --long --no-permissions -B'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# Git aliases
+alias gst='git status'
+alias gco='git checkout'
+alias glog='git log --oneline --graph --decorate'
+alias groot='cd "$(git rev-parse --show-toplevel 2>/dev/null || echo .)"'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+# Utilities
+alias python='python3'
+alias pip='pip3'
+alias h='history'
+alias c='clear'
+alias reload='source ~/.bashrc'
 
+# macOS specific
+alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
+alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder'
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Clipboard - macOS uses pbcopy/pbpaste
+alias pbcopy='pbcopy'
+alias pbpaste='pbpaste'
+alias y='pbcopy <'  # yank file to clipboard
+
+# ================== Bash Completion ==================
+# Homebrew bash completion
+if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+    . "$(brew --prefix)/etc/bash_completion"
+fi
+
+# Git completion
+if [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
+    . "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
+fi
+
+# ================== Starship Prompt ==================
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
+
+# ================== Zoxide (smart cd) ==================
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init bash)"
+    alias cd='z'
+fi
+
+# ================== FZF Configuration ==================
+if command -v fzf &> /dev/null; then
+    eval "$(fzf --bash)"
+
+    # FZF customization
+    export FZF_DEFAULT_OPTS="
+        --height=80%
+        --layout=reverse
+        --border
+        --color=fg:#ebdbb2,bg:#282828,hl:#fabd2f
+        --color=fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+        --color=info:#83a598,prompt:#bdae93,pointer:#fe8019
+        --color=marker:#8ec07c,spinner:#fabd2f,header:#83a598
+    "
+
+    export FZF_CTRL_T_OPTS="
+        --preview 'bat --style=numbers --color=always {} 2>/dev/null || cat {} 2>/dev/null || tree -C {} 2>/dev/null'
+        --preview-window=right:60%
+    "
+
+    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+fi
+
+# ================== NVM (Node Version Manager) ==================
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# ================== Go Configuration ==================
+if command -v go &> /dev/null; then
+    export GOPATH="$HOME/go"
+    export PATH="$PATH:$GOPATH/bin"
+fi
+
+# ================== Source local configuration ==================
+# Load local bashrc if it exists (for machine-specific config)
+if [ -f ~/.bashrc.local ]; then
+    . ~/.bashrc.local
+fi
+
+# Load bash aliases if they exist
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
-export JAVA_HOME=/usr/lib/jvm/default-java
-export PATH=$PATH:/home/latiif
-export PATH=$PATH:/home/latiif/Programs/Telegram
-
-alias gst='git status'
-
-export BAT_THEME="ansi"
-EDITOR="vim"
-
-# Start tmux if not inside tmux or VS Code terminal
-if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-    tmux attach-session -t default || tmux new-session -s default
-fi
-
-alias cat=bat
-alias groot='cd "$(git rev-parse --show-cdup)"'
-#alias sudo=doas
-alias python=python3
-alias y='xclip -selection clipboard <' # yank file to clipboard
-
-export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-eval "$(starship init bash)"
-eval "$(zoxide init bash)"
-eval "$(fzf --bash)"
-alias cd=z
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Customize fzf behavior
-export FZF_CTRL_T_OPTS="
-  --height=80%
-  --layout=reverse
-  --border
-  --preview 'bat --style=numbers --color=always {} || head -100 {}'
-  --preview-window=right:60%
-"
-
-
-# For GTK-based applications:
-export GTK_THEME=Adwaita
-# For icons:
-export XDG_ICON_THEME=Papirus

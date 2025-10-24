@@ -30,8 +30,8 @@ set expandtab               " Convert tabs to spaces
 
 " File Handling
 set autowrite               " Auto-save before commands like :next and :make
-set clipboard=unnamedplus   " Use system clipboard
-set paste                   " Disable auto-indent when pasting (toggle manually if needed)
+set clipboard=unnamed       " Use system clipboard on macOS
+set nopaste                 " Enable auto-indent (toggle with :set paste if needed)
 
 " Persistent Undo
 if has('persistent_undo')
@@ -66,8 +66,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Terminal Integration
-Plug 'christoomey/vim-tmux-navigator'
+" Git Integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Development
 Plug 'junegunn/vim-easy-align'                     " Text alignment
@@ -123,8 +124,13 @@ nnoremap <C-f> :NERDTreeFind<CR>
 command! F :Files
 
 " ================== Autocommands ==================
-" Theme
-colorscheme syria_forest
+" Theme (using default for now, can customize later)
+" colorscheme default
+try
+    colorscheme desert
+catch
+    colorscheme default
+endtry
 
 " YAML Indentation
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -132,10 +138,14 @@ autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
-set termguicolors
+" Enable true colors on macOS
+if has('termguicolors')
+    set termguicolors
+endif
+
 " ================== Performance ==================
 set lazyredraw
 set ttyfast
 set nocursorcolumn        " Disable cursor column for better performance
 set norelativenumber      " Disable relative numbers for better performance
-set synmaxcol=200        " Don't highlight long lines
+set synmaxcol=200         " Don't highlight long lines

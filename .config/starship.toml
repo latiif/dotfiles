@@ -2,7 +2,7 @@ add_newline = false
 # ~/.config/starship.toml
 
 format = """
-$username$directory$git_branch$git_status$nodejs$rust$python
+$username$directory$git_branch$git_status$nodejs$rust$python$golang
  """
 
 # MODULES
@@ -21,7 +21,7 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
-symbol = ""
+symbol = ""
 style = "bg:#45475a fg:#f9e2af"
 format = "[ $symbol $branch ]($style)"
 
@@ -30,30 +30,34 @@ style = "bg:#45475a fg:#f38ba8"
 format = "[($all_status$ahead_behind )]($style)"
 
 [nodejs]
-symbol = ""
+symbol = ""
 style = "bg:#585b70 fg:#a6e3a1"
 format = "[ $symbol ($version) ]($style)"
 detect_extensions = ["js", "ts", "jsx", "tsx"]
 
 [rust]
-symbol = ""
+symbol = ""
 style = "bg:#585b70 fg:#fab387"
 format = "[ $symbol ($version) ]($style)"
 
 [python]
-symbol = ""
+symbol = ""
 style = "bg:#585b70 fg:#89b4fa"
 format = "[ $symbol ($version) ]($style)"
 python_binary = "python3"
 
+[golang]
+symbol = ""
+style = "bg:#585b70 fg:#89dceb"
+format = "[ $symbol ($version) ]($style)"
+
 [time]
 disabled = false
 style = "bg:#1e1e2e fg:#a6e3a1"
-format = "[  $time ]($style)"
+format = "[  $time ]($style)"
 time_format = "%R"  # 24h format
 
 [character]
 success_symbol = "[❯](bold #89b4fa)"
 error_symbol = "[✗](bold red)"
 vicmd_symbol = "[❮](bold green)"
-
