@@ -16,7 +16,7 @@ Personal macOS dotfiles managed with GNU Stow.
 # Install tools
 brew install git stow vim bat eza zoxide fzf starship fd ripgrep
 brew install zsh-syntax-highlighting zsh-autosuggestions
-brew install --cask iterm2 zed
+brew install --cask iterm2 zed hammerspoon
 
 # Clone and deploy
 git clone https://github.com/latiif/dotfiles.git ~/.dotfiles
@@ -44,6 +44,7 @@ Then restart iTerm2.
 
 - `.zshrc` - Shell configuration
 - `.vimrc` - Vim configuration
+- `.hammerspoon/init.lua` - Hammerspoon configuration
 - `.config/starship.toml` - Prompt
 - `.config/zed/settings.json` - Zed editor
 - `.config/iterm2/` - iTerm2 profiles
