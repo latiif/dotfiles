@@ -1,4 +1,18 @@
 {
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "context7_api_key": ""
+      }
+    }
+  },
   "cursor_shape": "underline",
   "cursor_blink": false,
   "buffer_font_family": ".ZedMono",
@@ -20,7 +34,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light Hard",
-    "dark": "One Dark"
+    "dark": "Ayu Dark"
   },
   "toolbar": {
     "breadcrumbs": true,
@@ -44,5 +58,8 @@
   },
   "scrollbar": {
     "show": "never"
+  },
+  "terminal": {
+    "font_family": "FiraCode Nerd Font Mono"
   }
 }

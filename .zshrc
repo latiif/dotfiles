@@ -6,6 +6,7 @@ setopt HIST_FIND_NO_DUPS     # Don't show duplicates in search
 setopt HIST_SAVE_NO_DUPS     # Don't save duplicates
 setopt SHARE_HISTORY         # Share history between sessions
 setopt APPEND_HISTORY        # Append to history file
+setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY    # Add commands immediately
 setopt AUTO_CD               # cd by just typing directory name
 setopt AUTO_PUSHD            # Make cd push old dir onto stack
@@ -14,13 +15,17 @@ setopt GLOB_COMPLETE         # Show completions for glob patterns
 
 # History configuration
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=20000
+HISTSIZE=90000
+SAVEHIST=90000
 
 # ================== Environment Variables ==================
 export EDITOR="vim"
 export VISUAL="vim"
 export BAT_THEME="ansi"
+
+# Eza colors (di=directories, ln=symlinks, ex=executables)
+# Format: attribute;color (1=bold, 96=bright cyan, 92=bright green)
+export EZA_COLORS="di=1;96:ln=36:ex=1;92:*.tar=31:*.zip=31:*.jpg=35:*.png=35:*.mp4=34:*.mp3=35"
 
 # Homebrew
 export PATH="/opt/homebrew/bin:$PATH"
@@ -76,18 +81,46 @@ alias pbpaste='pbpaste'
 alias y='pbcopy <'  # yank file to clipboard
 
 # ================== Completions ==================
-# Load completions
+# Load completions (with caching for speed)
 autoload -Uz compinit
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
-# Case-insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# Case-insensitive and partial-word completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# Menu-style completion
+# Menu-style completion with arrow key navigation
 zstyle ':completion:*' menu select
+bindkey '^[[Z' reverse-menu-complete  # Shift-Tab to go back
 
 # Color completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Group completions by category
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+
+# Directory completion enhancements
+zstyle ':completion:*' squeeze-slashes true           # Treat // as /
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*' complete-options true          # Complete options for cd
+
+# Show hidden files in completion
+zstyle ':completion:*' file-patterns '%p:globbed-files' '*(-/):directories'
+
+# Speed up completion by caching
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# Better kill process completion
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+
+# SSH/SCP host completion
+zstyle ':completion:*:ssh:*' hosts off
+zstyle ':completion:*:scp:*' hosts off
 
 # Homebrew completions
 if type brew &>/dev/null; then
@@ -159,6 +192,17 @@ if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; 
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
+# ================== Tmux Auto-start ==================
+# Auto-start tmux: attach to existing session or create new one
+# Skip if already in tmux or running inside Zed or VSCode
+if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "zed" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    # Only auto-start if we're in an interactive shell
+    if [[ $- == *i* ]]; then
+        # Try to attach to a detached session, otherwise create new
+        tmux attach 2>/dev/null || tmux new-session
+    fi
+fi
+
 # ================== Source local configuration ==================
 # Load local zshrc if it exists (for machine-specific config)
 if [ -f ~/.zshrc.local ]; then
@@ -169,3 +213,15 @@ fi
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
 fi
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# Docker attach alias
+a() {
+    if [ -z "$1" ]; then
+        echo "Usage: a <container_name_or_id>"
+        return 1
+    fi
+
+    # Try bash first, fall back to sh if bash doesn't exist
+    docker exec -it "$1" bash 2>/dev/null || docker exec -it "$1" sh
+}

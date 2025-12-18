@@ -37,7 +37,8 @@ endif
 
 " Performance
 set lazyredraw ttyfast synmaxcol=200
-set norelativenumber nocursorcolumn
+set norelativenumber
+set cursorcolumn
 
 " ================== Syntax & Theme ==================
 syntax enable
@@ -92,7 +93,12 @@ autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " Trim trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
-colorscheme desert
+colorscheme syria_forest
+
+" ================== Cursor Visibility ==================
+" Make cursor position highly visible
+highlight CursorLine guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+highlight CursorColumn guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
 " ================== Statusline Configuration ==================
 " Get current mode

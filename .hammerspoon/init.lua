@@ -1,8 +1,9 @@
 -- App hotkeys using Option (⌥)
 local appHotkeys = {
   ['1'] = 'Safari',
-  ['2'] = 'iTerm',
-  ['3'] = 'Zed'
+  ['2'] = 'Terminal',
+  ['3'] = 'Visual Studio Code',
+  ['4'] = 'Slack',
 }
 
 -- Helper: focus or launch, then maximize
