@@ -19,9 +19,9 @@ HISTSIZE=90000
 SAVEHIST=90000
 
 # ================== Environment Variables ==================
-export EDITOR="vim"
-export VISUAL="vim"
-export BAT_THEME="ansi"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export BAT_THEME="Catppuccin Mocha"
 
 # Eza colors (di=directories, ln=symlinks, ex=executables)
 # Format: attribute;color (1=bold, 96=bright cyan, 92=bright green)
@@ -57,6 +57,10 @@ alias gst='git status'
 alias gco='git checkout'
 alias glog='git log --oneline --graph --decorate'
 alias groot='cd "$(git rev-parse --show-toplevel 2>/dev/null || echo .)"'
+alias gr='groot'
+
+# Vim to NVIM alias
+alias vim='nvim'
 
 # Navigation
 alias ..='cd ..'
@@ -79,6 +83,11 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 alias pbcopy='pbcopy'
 alias pbpaste='pbpaste'
 alias y='pbcopy <'  # yank file to clipboard
+
+# ================== Edit command in $EDITOR ==================
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
 
 # ================== Completions ==================
 # Load completions (with caching for speed)
@@ -133,6 +142,9 @@ if command -v starship &> /dev/null; then
 fi
 
 # ================== Zoxide (smart cd) ==================
+# Silence the "initialize at end of file" doctor warning: zsh-syntax-highlighting
+# also needs to load near the end, so zoxide can't truly be last.
+export _ZO_DOCTOR=0
 if command -v zoxide &> /dev/null; then
     eval "$(zoxide init zsh)"
     alias cd='z'
@@ -217,11 +229,19 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # Docker attach alias
 a() {
-    if [ -z "$1" ]; then
-        echo "Usage: a <container_name_or_id>"
-        return 1
-    fi
-
+    local container
+    container=$(docker ps --format '{{.ID}}\t{{.Names}}' | fzf --height=40% --layout=reverse --border --prompt="Select container: ") || return 0
+    local id=$(echo "$container" | awk '{print $1}')
     # Try bash first, fall back to sh if bash doesn't exist
-    docker exec -it "$1" bash 2>/dev/null || docker exec -it "$1" sh
+    docker exec -it "$id" bash 2>/dev/null || docker exec -it "$id" sh
 }
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+summarize() {
+  claude -p "Summarize the following concisely:\n\n$(cat)"
+}
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/latiif/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
