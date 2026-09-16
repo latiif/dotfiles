@@ -16,7 +16,7 @@ Personal macOS dotfiles managed with GNU Stow.
 # Install tools
 brew install git stow neovim tmux bat eza zoxide fzf starship fd ripgrep
 brew install zsh-syntax-highlighting zsh-autosuggestions
-brew install --cask iterm2 hammerspoon
+brew install --cask ghostty hammerspoon
 
 # Clone and deploy
 git clone https://github.com/latiif/dotfiles.git ~/.dotfiles
@@ -46,16 +46,6 @@ EOF
 chmod 600 ~/.zshrc.local
 ```
 
-## iTerm2 Setup
-
-```bash
-mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
-ln -sf ~/.config/iterm2/DynamicProfiles/profiles.json \
-       ~/Library/Application\ Support/iTerm2/DynamicProfiles/
-```
-
-Then restart iTerm2.
-
 ## Files
 
 - `.zshrc` - Shell configuration (secrets live in untracked `~/.zshrc.local`)
@@ -63,4 +53,4 @@ Then restart iTerm2.
 - `.tmux.conf` - tmux configuration (plugins via TPM, see Install)
 - `.hammerspoon/init.lua` - Hammerspoon configuration
 - `.config/starship.toml` - Prompt
-- `.config/iterm2/` - iTerm2 profiles
+- `Library/Application Support/com.mitchellh.ghostty/config.ghostty` - Ghostty terminal config

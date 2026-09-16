@@ -1,0 +1,11 @@
+macos-icon = blueprint
+macos-titlebar-style = hidden
+copy-on-select = true
+confirm-close-surface = false
+macos-non-native-fullscreen = padded-notch
+macos-window-buttons = hidden
+scrollback-limit = 10000
+window-padding-x = 0
+window-padding-y = 0
+term = xterm-256color
+font-feature = -calt
