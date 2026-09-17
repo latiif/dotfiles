@@ -83,6 +83,7 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 alias pbcopy='pbcopy'
 alias pbpaste='pbpaste'
 alias y='pbcopy <'  # yank file to clipboard
+alias yp='pwd | pbcopy'  # yank file to clipboard
 
 # ================== Edit command in $EDITOR ==================
 autoload -Uz edit-command-line
